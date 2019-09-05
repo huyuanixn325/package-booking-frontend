@@ -7,7 +7,18 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     packagesList:[],
-    loading:false
+    loading:false,
+    contextFilter:'all'
+  },getters:{
+    packagesListFilter:function(state){
+      let packagesList = [];
+      state.packagesList.forEach(element=>{
+        if(element.state===state.contextFilter||state.contextFilter==='all'){
+          packagesList.push(element);
+        }
+      });
+      return packagesList;
+    }
   },
   mutations: {
     initPackagesList:function(state,packages){
@@ -30,6 +41,9 @@ export default new Vuex.Store({
     },
     changeLoading:function(state,content){
       state.loading = content;
+    },
+    changeContextFilter:function(state,contextFilter){
+      state.contextFilter = contextFilter;
     }
   },
   actions: {
@@ -41,7 +55,7 @@ export default new Vuex.Store({
         weight:values.weight,
         state:"未取件"
       }).then(function(response){
-        context.dispatch("getPckages");
+        context.dispatch("getPackages");
         console.log(response);
       }).catch(function(error){
         console.log(error);
@@ -59,12 +73,12 @@ export default new Vuex.Store({
         console.log(error);
       });
     },
-    putPackages:function(context,package){
+    putPackages:function(context,vaules){
       axios.put("http://localhost:8085/packages",{
-        trackingNumber:values.trackingNumber,
-        state:"未取件"
+        trackingNumber:vaules.trackingNumber,
+        state:"已取件"
       }).then(function(response){
-        context.dispatch("getPckages");
+        context.dispatch('getPackages');
         console.log(response);
       }).catch(function(error){
         console.log(error);

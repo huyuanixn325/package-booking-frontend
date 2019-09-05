@@ -1,4 +1,6 @@
 <template>
+<div>
+<packageHead/>
   <a-table :columns="columns"
     :dataSource="data"
     :loading="loading"
@@ -10,8 +12,10 @@
       </a>
     </span>
   </a-table>
+  </div>
 </template>
 <script>
+import packageHead from './PackageHead.vue'
 import reqwest from 'reqwest';
 const columns = [{
   title: '运单号',
@@ -38,10 +42,9 @@ const columns = [{
 }];
 
 export default {
-  computed: {
-    loading:function(){
-        return this.$store.state.loading;
-    }
+  name:'package-list',
+  components:{
+    packageHead
   },
   data() {
     return {
@@ -50,7 +53,7 @@ export default {
   },
   computed:{
     data:function(){
-    return this.$store.state.packagesList;
+    return this.$store.getters.packagesListFilter;
      console.log("46",this.data);
     },
     loading:function(){
