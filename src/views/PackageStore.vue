@@ -30,27 +30,6 @@
       />
     </a-form-item>
 
-    <!-- <a-form-item
-      label="收件人"
-      :label-col="{ span: 5 }"
-      :wrapper-col="{ span: 12 }"
-    >
-      <a-select
-        v-decorator="[
-          'gender',
-          {rules: [{ required: true, message: 'Please select your gender!' }]}
-        ]"
-        placeholder="Select a option and change input text above"
-        @change="handleSelectChange"
-      >
-        <a-select-option value="male">
-          male
-        </a-select-option>
-        <a-select-option value="female">
-          female
-        </a-select-option>
-      </a-select>
-    </a-form-item> -->
 
   <a-form-item
       label="电话"
@@ -103,6 +82,7 @@ export default {
     handleSubmit (e) {
       e.preventDefault()
       this.form.validateFields((err, values) => {
+        this.$store.dispatch("postPackages",values);
         if (!err) {
           console.log('Received values of form: ', values)
         }
