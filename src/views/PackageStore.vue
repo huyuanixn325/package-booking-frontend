@@ -98,3 +98,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.message{
+  width:200px;
+}
+</style>
